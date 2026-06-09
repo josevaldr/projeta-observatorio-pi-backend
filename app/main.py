@@ -1,11 +1,18 @@
 from fastapi import FastAPI
 from app.config.settings import settings
+from app.config.init_db import create_tables
+from app.routes.user_routes import router as user_router  
+
+create_tables()
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description="API do backend para o ecossistema PROJETA",
     version="1.0.0"
 )
+
+# 🔥 ESSA LINHA É O QUE ESTÁ FALTANDO
+app.include_router(user_router)
 
 @app.get("/")
 def read_root():
@@ -14,8 +21,3 @@ def read_root():
         "projeto": settings.PROJECT_NAME,
         "mensagem": "Backend inicializado com sucesso!"
     }
-
-# 🛠️ ADICIONE ESTAS LINHAS ABAIXO NO FINAL DO FICHEIRO:
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
