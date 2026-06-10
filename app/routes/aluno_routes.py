@@ -1,7 +1,7 @@
 
 from fastapi import APIRouter
 
-from app.schemas.aluno_schema import AlunoCreate
+from app.schemas.aluno_schemas import AlunoCreate
 
 from app.controllers.aluno_controller import (
     create_aluno_controller,
