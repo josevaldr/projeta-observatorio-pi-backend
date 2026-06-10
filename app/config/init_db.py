@@ -83,6 +83,16 @@ def create_tables():
     );
     """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS participa (
+        cod_id_equipe INTEGER,
+        cod_id_aluno INTEGER,
+        semestre TEXT NOT NULL,
+        PRIMARY KEY (cod_id_equipe, cod_id_aluno, semestre),
+        FOREIGN KEY (cod_id_aluno) REFERENCES aluno (id_aluno),
+        FOREIGN KEY (cod_id_equipe) REFERENCES equipe (id_equipe)
+    );
+    """)
 
     conn.commit()
     conn.close()
