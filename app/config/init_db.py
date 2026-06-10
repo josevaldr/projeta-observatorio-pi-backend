@@ -34,6 +34,14 @@ def create_tables():
     );               
     """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS professor (
+        id_professor INTEGER PRIMARY KEY,
+        especialidade TEXT,
+        FOREIGN KEY (id_professor) REFERENCES usuario (id_usuario)
+    );               
+    """)
+
     conn.commit()
     conn.close()
 
