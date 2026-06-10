@@ -74,6 +74,16 @@ def create_tables():
     );
     """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS equipe (
+        id_equipe INTEGER PRIMARY KEY AUTOINCREMENT,
+        cod_id_projeto INTEGER,
+        nome_equipe TEXT,
+        FOREIGN KEY (cod_id_projeto) REFERENCES projeto (id_projeto)
+    );
+    """)
+
+
     conn.commit()
     conn.close()
 
