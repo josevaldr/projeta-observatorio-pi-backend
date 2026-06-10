@@ -1,84 +1,40 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, EmailStr
 
-from app.config.database import get_connection
+from fastapi import APIRouter
+
+from app.schemas.aluno_schema import AlunoCreate
+
+from app.controllers.aluno_controller import (
+    create_aluno_controller,
+    get_alunos_controller,
+    get_aluno_by_id_controller,
+    update_aluno_controller,
+    delete_aluno_controller
+)
 
 
 router = APIRouter(prefix="/alunos", tags=["Alunos"])
 
 
-class AlunoCreate(BaseModel):
-    nome_usuario: str
-    email: EmailStr
-    senha: str
+@router.post("/")
+def create_aluno(data: AlunoCreate):
+    return create_aluno_controller(data)
 
 
-@router.post("")
-def cadastrar_aluno(aluno: AlunoCreate):
-    conn = get_connection()
-    cursor = conn.cursor()
-
-    try:
-        cursor.execute("""
-            INSERT INTO usuario (nome_usuario, email, senha, tipo_usuario)
-            VALUES (?, ?, ?, ?)
-        """, (
-            aluno.nome_usuario,
-            aluno.email,
-            aluno.senha,
-            "aluno"
-        ))
-
-        conn.commit()
-
-        return {
-            "mensagem": "Aluno cadastrado com sucesso",
-            "aluno": {
-                "nome_usuario": aluno.nome_usuario,
-                "email": aluno.email,
-                "tipo_usuario": "aluno"
-            }
-        }
-
-    except Exception as erro:
-        raise HTTPException(status_code=400, detail=str(erro))
-
-    finally:
-        conn.close()
+@router.get("/")
+def get_alunos():
+    return get_alunos_controller()
 
 
-@router.get("")
-def listar_alunos():
-    conn = get_connection()
-    cursor = conn.cursor()
+@router.get("/{id_aluno}")
+def get_aluno(id_aluno: int):
+    return get_aluno_by_id_controller(id_aluno)
 
-    try:
-        cursor.execute("""
-            SELECT id_usuario, nome_usuario, email, tipo_usuario, data_cadastro
-            FROM usuario
-            WHERE tipo_usuario = ?
-        """, ("aluno",))
 
-        alunos = cursor.fetchall()
+@router.put("/{id_aluno}")
+def update_aluno(id_aluno: int, data: AlunoCreate):
+    return update_aluno_controller(id_aluno, data)
 
-        lista_alunos = []
 
-        for aluno in alunos:
-            lista_alunos.append({
-                "id_usuario": aluno[0],
-                "nome_usuario": aluno[1],
-                "email": aluno[2],
-                "tipo_usuario": aluno[3],
-                "data_cadastro": aluno[4]
-            })
-
-        return {
-            "mensagem": "Alunos listados com sucesso",
-            "alunos": lista_alunos
-        }
-
-    except Exception as erro:
-        raise HTTPException(status_code=400, detail=str(erro))
-
-    finally:
-        conn.close()
+@router.delete("/{id_aluno}")
+def delete_aluno(id_aluno: int):
+    return delete_aluno_controller(id_aluno)
