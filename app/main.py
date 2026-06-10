@@ -6,7 +6,11 @@ from app.config.init_db import create_tables
 from app.routes.user_routes import router as user_router
 from app.routes.aluno_routes import router as aluno_router
 from app.routes.professor_routes import router as professor_router
+<<<<<<< HEAD
 from app.routes.coordenador_routes import router as coordenador_router
+=======
+from app.routes.empresa_routes import router as empresa_router
+>>>>>>> aa107ddba1e3d8f3fb8a83095e9915a0c48c2fbf
 
 
 create_tables()
@@ -21,7 +25,11 @@ app = FastAPI(
 app.include_router(user_router)
 app.include_router(aluno_router)
 app.include_router(professor_router)
+<<<<<<< HEAD
 app.include_router(coordenador_router)
+=======
+app.include_router(empresa_router)
+>>>>>>> aa107ddba1e3d8f3fb8a83095e9915a0c48c2fbf
 
 
 
