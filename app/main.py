@@ -10,8 +10,6 @@ app = FastAPI(
     description="API do backend para o ecossistema PROJETA",
     version="1.0.0"
 )
-
-# 🔥 ESSA LINHA É O QUE ESTÁ FALTANDO
 app.include_router(user_router)
 
 @app.get("/")
