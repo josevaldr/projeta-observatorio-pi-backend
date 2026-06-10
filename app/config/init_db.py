@@ -15,5 +15,35 @@ def create_tables():
     );
     """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS aluno (
+        id_aluno INTEGER PRIMARY KEY,
+        matricula TEXT NOT NULL,
+        curso TEXT NOT NULL,
+        turma TEXT NOT NULL,
+        FOREIGN KEY (id_aluno) REFERENCES usuario (id_usuario)
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS empresa_parceira (
+        id_empresa INTEGER PRIMARY KEY,
+        telefone TEXT,
+        cnpj TEXT NOT NULL UNIQUE,
+        FOREIGN KEY (id_empresa) REFERENCES usuario (id_usuario)
+    );               
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS professor (
+        id_professor INTEGER PRIMARY KEY,
+        especialidade TEXT,
+        FOREIGN KEY (id_professor) REFERENCES usuario (id_usuario)
+    );               
+    """)
+
     conn.commit()
     conn.close()
+
+
+
