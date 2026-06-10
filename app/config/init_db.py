@@ -25,6 +25,15 @@ def create_tables():
     );
     """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS empresa_parceira (
+        id_empresa INTEGER PRIMARY KEY,
+        telefone TEXT,
+        cnpj TEXT NOT NULL UNIQUE,
+        FOREIGN KEY (id_empresa) REFERENCES usuario (id_usuario)
+    );               
+    """)
+
     conn.commit()
     conn.close()
 
