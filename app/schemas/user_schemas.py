@@ -6,3 +6,6 @@ class UserCreate(BaseModel):
     email: EmailStr
     senha: str
     tipo_usuario: Literal["aluno", "professor", "empresa", "coordenador"]
+
+
+

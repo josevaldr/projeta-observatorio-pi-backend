@@ -34,6 +34,33 @@ def create_tables():
     );               
     """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS professor (
+        id_professor INTEGER PRIMARY KEY,
+        especialidade TEXT,
+        FOREIGN KEY (id_professor) REFERENCES usuario (id_usuario)
+    );               
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS coordenador (
+        id_coordenador INTEGER PRIMARY KEY,
+        curso TEXT,
+        FOREIGN KEY (id_coordenador) REFERENCES usuario (id_usuario)
+    );               
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS avaliacao (
+        id_avaliacao INTEGER PRIMARY KEY AUTOINCREMENT,
+        cod_id_professor INTEGER,
+        conceito TEXT NOT NULL,
+        feedback TEXT,
+        data_avaliacao DATE DEFAULT CURRENT_DATE,
+        FOREIGN KEY (cod_id_professor) REFERENCES professor (id_professor)
+    );               
+    """)
+
     conn.commit()
     conn.close()
 
