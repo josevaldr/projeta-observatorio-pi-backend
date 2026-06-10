@@ -61,6 +61,19 @@ def create_tables():
     );               
     """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS projeto (
+        id_projeto INTEGER PRIMARY KEY AUTOINCREMENT,
+        cod_id_avaliacao INTEGER,
+        titulo TEXT NOT NULL,
+        descricao TEXT,
+        data_upload DATE DEFAULT CURRENT_DATE,
+        status_projeto TEXT,
+        link_projeto TEXT,
+        FOREIGN KEY (cod_id_avaliacao) REFERENCES avaliacao (id_avaliacao)
+    );
+    """)
+
     conn.commit()
     conn.close()
 
