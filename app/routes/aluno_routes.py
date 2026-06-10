@@ -3,14 +3,7 @@ from fastapi import APIRouter
 
 from app.schemas.aluno_schemas import AlunoCreate
 
-from app.controllers.aluno_controller import (
-    create_aluno_controller,
-    get_alunos_controller,
-    get_aluno_by_id_controller,
-    update_aluno_controller,
-    delete_aluno_controller
-)
-
+from app.controllers.aluno_controller import *
 
 router = APIRouter(prefix="/alunos", tags=["Alunos"])
 
