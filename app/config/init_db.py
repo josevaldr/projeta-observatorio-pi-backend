@@ -42,6 +42,14 @@ def create_tables():
     );               
     """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS coordenador (
+        id_coordenador INTEGER PRIMARY KEY,
+        curso TEXT,
+        FOREIGN KEY (id_coordenador) REFERENCES usuario (id_usuario)
+    );               
+    """)
+
     conn.commit()
     conn.close()
 
