@@ -4,9 +4,9 @@ from app.services.user_service import (
     get_users_service,
     get_user_by_id_service,
     update_user_service,
-    delete_user_service
+    delete_user_service,
+    authenticate_user_service
 )
-
 
 
 def create_user_controller(data):
@@ -48,6 +48,20 @@ def get_users_controller():
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     
+def authenticate_user_controller(email, senha):
+    try:
+        user = authenticate_user_service(email, senha)
+
+        if not user:
+            raise HTTPException(status_code=401, detail="E-mail ou senha incorretos")
+
+        return user
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
 def delete_user_controller(user_id):
     try:
         return delete_user_service(user_id)
