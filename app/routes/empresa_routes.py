@@ -14,11 +14,6 @@ from app.controllers.empresa_controller import (
 router = APIRouter(prefix="/empresas", tags=["Empresas"])
 
 
-@router.post("")
-def create_empresa(data: EmpresaCreate):
-    return create_empresa_controller(data)
-
-
 @router.get("")
 def get_empresas():
     return get_empresas_controller()
@@ -36,4 +31,4 @@ def update_empresa(id_empresa: int, data: EmpresaCreate):
 
 @router.delete("/{id_empresa}")
 def delete_empresa(id_empresa: int):
-    return delete_empresa_controller(id_empresa)
+   
