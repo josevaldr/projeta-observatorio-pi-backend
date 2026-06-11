@@ -8,6 +8,7 @@ from app.routes.user_routes import router as user_router
 from app.routes.aluno_routes import router as aluno_router
 from app.routes.professor_routes import router as professor_router
 from app.routes.coordenador_routes import router as coordenador_router
+from app.routes.empresa_routes import router as empresa_router
 
 
 create_tables()
@@ -36,7 +37,7 @@ app.include_router(user_router)
 app.include_router(aluno_router)
 app.include_router(professor_router)
 app.include_router(coordenador_router)
-
+app.include_router(empresa_router)
 
 
 @app.get("/")
