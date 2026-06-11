@@ -3,7 +3,8 @@ from app.repositories.user_repository import (
     get_all_users,
     get_user_by_id,
     update_user,
-    delete_user
+    delete_user,
+    get_user_by_email_and_password
 )
 
 
@@ -12,6 +13,15 @@ def create_user_service(data):
         raise Exception("Email é obrigatório")
 
     return create_user(data)
+
+
+def authenticate_user_service(email, senha):
+    if not email:
+        raise Exception("Email é obrigatório")
+    if not senha:
+        raise Exception("Senha é obrigatória")
+
+    return get_user_by_email_and_password(email, senha)
 
 def get_users_service():
     return get_all_users()
