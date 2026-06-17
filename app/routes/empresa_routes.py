@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.schemas.empresa_schema import EmpresaCreate
+from app.schemas.empresa_schemas import EmpresaCreate
 
 from app.controllers.empresa_controller import (
     create_empresa_controller,

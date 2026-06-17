@@ -94,6 +94,18 @@ def create_tables():
     );
     """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS perfil_aluno (
+        id_aluno INTEGER PRIMARY KEY,
+        bio TEXT,
+        habilidades TEXT,
+        linkedin TEXT,
+        github TEXT,
+        tema TEXT DEFAULT 'blue',
+        FOREIGN KEY (id_aluno) REFERENCES aluno (id_aluno)
+    );
+    """)
+
     conn.commit()
     conn.close()
 
