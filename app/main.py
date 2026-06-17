@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.config.settings import settings
 from app.config.init_db import create_tables
@@ -16,6 +17,19 @@ app = FastAPI(
     title=settings.PROJECT_NAME,
     description="API do backend para o ecossistema PROJETA",
     version="1.0.0"
+)
+
+origins = [
+    "http://localhost:8000",
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

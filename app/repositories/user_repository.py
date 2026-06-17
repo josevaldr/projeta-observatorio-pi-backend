@@ -107,5 +107,28 @@ def get_all_users():
         conn.close()
 
 
+def get_user_by_email_and_password(email, senha):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute(
+            "SELECT * FROM usuario WHERE email = ? AND senha = ?",
+            (email, senha)
+        )
+        user = cursor.fetchone()
+
+        if user:
+            user_data = dict(user)
+            user_data.pop("senha", None)
+            return user_data
+
+        return None
+
+    finally:
+        cursor.close()
+        conn.close()
+
+
         
 
