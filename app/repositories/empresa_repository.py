@@ -35,7 +35,12 @@ def get_all_empresas():
     cursor = conn.cursor()
 
     try:
-        cursor.execute("SELECT * FROM empresa_parceira")
+        query = """
+        SELECT e.*, u.nome_usuario, u.email 
+        FROM empresa_parceira e
+        JOIN usuario u ON e.id_empresa = u.id_usuario
+        """
+        cursor.execute(query)
         empresas = cursor.fetchall()
 
         return [dict(empresa) for empresa in empresas]
@@ -50,10 +55,13 @@ def get_empresa_by_id(id_empresa):
     cursor = conn.cursor()
 
     try:
-        cursor.execute(
-            "SELECT * FROM empresa_parceira WHERE id_empresa = ?",
-            (id_empresa,)
-        )
+        query = """
+        SELECT e.*, u.nome_usuario, u.email 
+        FROM empresa_parceira e
+        JOIN usuario u ON e.id_empresa = u.id_usuario
+        WHERE e.id_empresa = ?
+        """
+        cursor.execute(query, (id_empresa,))
 
         empresa = cursor.fetchone()
 

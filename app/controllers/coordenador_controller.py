@@ -8,6 +8,17 @@ def create_coordenador_controller(data):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+def create_coordenador_completo_controller(data):
+    try:
+        coord = create_coordenador_completo_service(data)
+        return {
+            "message": "Usuário e Coordenador criados com sucesso!",
+            "coordenador": coord
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
 
 def get_coordenadores_controller():
     try:

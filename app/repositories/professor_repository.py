@@ -29,7 +29,12 @@ def get_all_professores():
     cursor = conn.cursor()
 
     try:
-        query = "SELECT * FROM professor"
+        query = """
+        SELECT p.*, u.nome_usuario, u.email 
+        FROM professor p
+        JOIN usuario u ON p.id_professor = u.id_usuario
+        """
+        cursor.execute(query)
         professores = cursor.fetchall()
 
         return [dict(p) for p in professores]
@@ -44,7 +49,12 @@ def get_professor_by_id(id_professor):
     cursor = conn.cursor()
 
     try:
-        query = "SELECT * FROM professor WHERE id_professor = ?"
+        query = """
+        SELECT p.*, u.nome_usuario, u.email 
+        FROM professor p
+        JOIN usuario u ON p.id_professor = u.id_usuario
+        WHERE p.id_professor = ?
+        """
         cursor.execute(query, (id_professor,))
         professor = cursor.fetchone()
 

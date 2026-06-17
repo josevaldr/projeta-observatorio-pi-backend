@@ -8,6 +8,17 @@ def create_professor_controller(data):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+def create_professor_completo_controller(data):
+    try:
+        prof = create_professor_completo_service(data)
+        return {
+            "message": "Usuário e Professor criados com sucesso!",
+            "professor": prof
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
 
 def get_professores_controller():
     try:

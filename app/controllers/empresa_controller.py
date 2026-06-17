@@ -2,6 +2,7 @@ from fastapi import HTTPException
 
 from app.services.empresa_service import (
     create_empresa_service,
+    create_empresa_completo_service,
     get_empresas_service,
     get_empresa_by_id_service,
     update_empresa_service,
@@ -21,6 +22,17 @@ def create_empresa_controller(data):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+def create_empresa_completo_controller(data):
+    try:
+        empresa = create_empresa_completo_service(data)
+
+        return {
+            "message": "Usuário e Empresa criados com sucesso",
+            "empresa": empresa
+        }
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

@@ -1,9 +1,10 @@
 from fastapi import APIRouter
 
-from app.schemas.empresa_schemas import EmpresaCreate
+from app.schemas.empresa_schemas import EmpresaCreate, EmpresaCompletoCreate
 
 from app.controllers.empresa_controller import (
     create_empresa_controller,
+    create_empresa_completo_controller,
     get_empresas_controller,
     get_empresa_by_id_controller,
     update_empresa_controller,
@@ -27,6 +28,10 @@ def get_empresa(id_empresa: int):
 @router.post("")
 def create_empresa(data: EmpresaCreate):
     return create_empresa_controller(data)
+
+@router.post("/completo")
+def create_empresa_completo(data: EmpresaCompletoCreate):
+    return create_empresa_completo_controller(data)
 
 
 @router.put("/{id_empresa}")

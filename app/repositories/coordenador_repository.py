@@ -30,7 +30,12 @@ def get_all_coordenadores():
     cursor = conn.cursor()
 
     try:
-        cursor.execute("SELECT * FROM coordenador")
+        query = """
+        SELECT c.*, u.nome_usuario, u.email 
+        FROM coordenador c
+        JOIN usuario u ON c.id_coordenador = u.id_usuario
+        """
+        cursor.execute(query)
         coordenadores = cursor.fetchall()
 
         return [dict(c) for c in coordenadores]
@@ -45,7 +50,12 @@ def get_coordenador_by_id(id_coordenador):
     cursor = conn.cursor()
 
     try:
-        query = "SELECT * FROM coordenador WHERE id_coordenador = ?"
+        query = """
+        SELECT c.*, u.nome_usuario, u.email 
+        FROM coordenador c
+        JOIN usuario u ON c.id_coordenador = u.id_usuario
+        WHERE c.id_coordenador = ?
+        """
         cursor.execute(query, (id_coordenador,))
         coordenador = cursor.fetchone()
 

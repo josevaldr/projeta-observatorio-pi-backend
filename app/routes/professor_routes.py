@@ -1,13 +1,18 @@
 
 from fastapi import APIRouter
 from app.controllers.professor_controller import *
-from app.schemas.professor_schemas import ProfessorCreate
+from app.schemas.professor_schemas import ProfessorCreate, ProfessorCompletoCreate
 
 router = APIRouter(prefix="/professores", tags=["Professores"])
 
 @router.post("/")
 def create_professor(data: ProfessorCreate):
     return create_professor_controller(data)
+
+@router.post("/completo")
+def create_professor_completo(data: ProfessorCompletoCreate):
+    return create_professor_completo_controller(data)
+
 
 @router.get("/")
 def get_professores():

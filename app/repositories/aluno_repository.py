@@ -37,7 +37,12 @@ def get_all_alunos():
     cursor = conn.cursor()
 
     try:
-        cursor.execute("SELECT * FROM aluno")
+        query = """
+        SELECT a.*, p.bio, p.habilidades, p.linkedin, p.github, p.tema 
+        FROM aluno a
+        LEFT JOIN perfil_aluno p ON a.id_aluno = p.id_aluno
+        """
+        cursor.execute(query)
         alunos = cursor.fetchall()
 
         return [dict(aluno) for aluno in alunos]
@@ -109,3 +114,45 @@ def delete_aluno(id_aluno):
     finally:
         cursor.close()
         conn.close()
+
+def get_perfil_aluno(id_aluno: int):
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT * FROM perfil_aluno WHERE id_aluno = ?", (id_aluno,))
+        perfil = cursor.fetchone()
+        if perfil:
+            return dict(perfil)
+        return None
+    finally:
+        cursor.close()
+        conn.close()
+
+def create_or_update_perfil_aluno(id_aluno: int, data):
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        # Check if exists
+        cursor.execute("SELECT id_aluno FROM perfil_aluno WHERE id_aluno = ?", (id_aluno,))
+        exists = cursor.fetchone()
+        
+        if exists:
+            query = """
+            UPDATE perfil_aluno 
+            SET bio = ?, habilidades = ?, linkedin = ?, github = ?, tema = ?
+            WHERE id_aluno = ?
+            """
+            cursor.execute(query, (data.bio, data.habilidades, data.linkedin, data.github, data.tema, id_aluno))
+        else:
+            query = """
+            INSERT INTO perfil_aluno (id_aluno, bio, habilidades, linkedin, github, tema)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """
+            cursor.execute(query, (id_aluno, data.bio, data.habilidades, data.linkedin, data.github, data.tema))
+            
+        conn.commit()
+        return get_perfil_aluno(id_aluno)
+    finally:
+        cursor.close()
+        conn.close()
+

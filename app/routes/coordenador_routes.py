@@ -1,13 +1,18 @@
 
 from fastapi import APIRouter
 from app.controllers.coordenador_controller import *
-from app.schemas.coordenador_schemas import CoordenadorCreate
+from app.schemas.coordenador_schemas import CoordenadorCreate, CoordenadorCompletoCreate
 
 router = APIRouter(prefix="/coordenadores", tags=["Coordenadores"])
 
 @router.post("/")
 def create_coordenador(data: CoordenadorCreate):
     return create_coordenador_controller(data)
+
+@router.post("/completo")
+def create_coordenador_completo(data: CoordenadorCompletoCreate):
+    return create_coordenador_completo_controller(data)
+
 
 @router.get("/")
 def get_coordenadores():

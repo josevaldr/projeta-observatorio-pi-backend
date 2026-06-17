@@ -7,6 +7,9 @@ from app.repositories.empresa_repository import (
 )
 
 from app.repositories.user_repository import get_user_by_id
+from app.services.user_service import create_user_service
+from app.schemas.user_schemas import UserCreate
+from app.schemas.empresa_schemas import EmpresaCreate
 
 
 def create_empresa_service(data):
@@ -24,6 +27,30 @@ def create_empresa_service(data):
         raise ValueError("Essa empresa já foi cadastrada.")
 
     return create_empresa(data)
+
+def create_empresa_completo_service(data):
+    user_data = UserCreate(
+        nome_usuario=data.nome_usuario,
+        email=data.email,
+        senha=data.senha,
+        tipo_usuario="empresa"
+    )
+    novo_usuario = create_user_service(user_data)
+    
+    emp_data = EmpresaCreate(
+        id_empresa=novo_usuario["id_usuario"],
+        telefone=data.telefone,
+        cnpj=data.cnpj
+    )
+    create_empresa(emp_data)
+    
+    return {
+        "id_empresa": novo_usuario["id_usuario"],
+        "nome_usuario": data.nome_usuario,
+        "email": data.email,
+        "telefone": data.telefone,
+        "cnpj": data.cnpj
+    }
 
 
 def get_empresas_service():
