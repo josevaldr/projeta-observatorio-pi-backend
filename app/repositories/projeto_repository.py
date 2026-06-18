@@ -45,7 +45,7 @@ class ProjetoRepository:
             if equipe_row:
                 equipe = dict(equipe_row)
                 cursor.execute("""
-                    SELECT u.nome_usuario 
+                    SELECT u.nome_usuario, u.id_usuario 
                     FROM participa p
                     JOIN aluno a ON p.cod_id_aluno = a.id_aluno
                     JOIN usuario u ON a.id_aluno = u.id_usuario
@@ -53,6 +53,7 @@ class ProjetoRepository:
                 """, (equipe['id_equipe'],))
                 alunos_rows = cursor.fetchall()
                 equipe['alunos'] = [r['nome_usuario'] for r in alunos_rows]
+                equipe['id_alunos'] = [r['id_usuario'] for r in alunos_rows]
                 proj['equipe'] = equipe
             else:
                 proj['equipe'] = None

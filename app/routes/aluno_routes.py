@@ -20,6 +20,9 @@ def create_aluno_completo(data: AlunoCompletoCreate):
 def get_alunos():
     return get_alunos_controller()
 
+@router.get("/publico/{nome_usuario}")
+def get_portfolio_publico(nome_usuario: str):
+    return get_portfolio_by_username_controller(nome_usuario)
 
 @router.get("/{id_aluno}")
 def get_aluno(id_aluno: int):

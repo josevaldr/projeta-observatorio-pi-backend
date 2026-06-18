@@ -95,7 +95,7 @@ def create_tables():
     """)
 
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS perfil_aluno (
+    CREATE TABLE IF NOT EXISTS portfolio (
         id_aluno INTEGER PRIMARY KEY,
         bio TEXT,
         habilidades TEXT,

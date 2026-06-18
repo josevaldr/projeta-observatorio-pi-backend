@@ -8,7 +8,8 @@ from app.services.aluno_service import (
     update_aluno_service,
     delete_aluno_service,
     get_perfil_aluno_service,
-    create_or_update_perfil_aluno_service
+    create_or_update_perfil_aluno_service,
+    get_portfolio_by_username_service
 )
 
 
@@ -108,3 +109,9 @@ def create_or_update_perfil_aluno_controller(id_aluno, data):
     except LookupError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
+def get_portfolio_by_username_controller(username):
+    try:
+        portfolio = get_portfolio_by_username_service(username)
+        return portfolio
+    except LookupError as e:
+        raise HTTPException(status_code=404, detail=str(e))

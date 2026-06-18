@@ -5,7 +5,8 @@ from app.repositories.aluno_repository import (
     update_aluno,
     delete_aluno,
     get_perfil_aluno,
-    create_or_update_perfil_aluno
+    create_or_update_perfil_aluno,
+    get_portfolio_by_username
 )
 
 from app.repositories.user_repository import get_user_by_id
@@ -93,3 +94,8 @@ def create_or_update_perfil_aluno_service(id_aluno, data):
         raise LookupError("Aluno não encontrado.")
     return create_or_update_perfil_aluno(id_aluno, data)
 
+def get_portfolio_by_username_service(username: str):
+    portfolio = get_portfolio_by_username(username)
+    if not portfolio:
+        raise LookupError("Portfólio não encontrado.")
+    return portfolio
