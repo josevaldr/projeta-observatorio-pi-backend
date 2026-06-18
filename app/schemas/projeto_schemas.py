@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, Dict, Any
 from datetime import date
 
 class ProjetoBase(BaseModel):
@@ -22,6 +22,7 @@ class ProjetoUpdate(BaseModel):
 class ProjetoResponse(ProjetoBase):
     id_projeto: int
     data_upload: Optional[date]
+    equipe: Optional[Dict[str, Any]] = None
 
     class Config:
         orm_mode = True

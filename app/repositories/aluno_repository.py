@@ -38,9 +38,10 @@ def get_all_alunos():
 
     try:
         query = """
-        SELECT a.*, p.bio, p.habilidades, p.linkedin, p.github, p.tema 
+        SELECT a.*, p.bio, p.habilidades, p.linkedin, p.github, p.tema, u.nome_usuario, u.email 
         FROM aluno a
         LEFT JOIN perfil_aluno p ON a.id_aluno = p.id_aluno
+        JOIN usuario u ON a.id_aluno = u.id_usuario
         """
         cursor.execute(query)
         alunos = cursor.fetchall()

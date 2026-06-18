@@ -36,7 +36,26 @@ class ProjetoRepository:
         cursor = conn.cursor()
         
         cursor.execute("SELECT * FROM projeto")
-        projetos = [dict(row) for row in cursor.fetchall()]
+        projetos_rows = cursor.fetchall()
+        projetos = [dict(row) for row in projetos_rows]
+        
+        for proj in projetos:
+            cursor.execute("SELECT id_equipe, nome_equipe FROM equipe WHERE cod_id_projeto = ?", (proj['id_projeto'],))
+            equipe_row = cursor.fetchone()
+            if equipe_row:
+                equipe = dict(equipe_row)
+                cursor.execute("""
+                    SELECT u.nome_usuario 
+                    FROM participa p
+                    JOIN aluno a ON p.cod_id_aluno = a.id_aluno
+                    JOIN usuario u ON a.id_aluno = u.id_usuario
+                    WHERE p.cod_id_equipe = ?
+                """, (equipe['id_equipe'],))
+                alunos_rows = cursor.fetchall()
+                equipe['alunos'] = [r['nome_usuario'] for r in alunos_rows]
+                proj['equipe'] = equipe
+            else:
+                proj['equipe'] = None
         
         conn.close()
         return projetos
