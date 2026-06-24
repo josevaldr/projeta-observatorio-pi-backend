@@ -1,52 +1,109 @@
-# projeta-observatorio-pi-backend
+# 🚀 PROJETA — Observatório de Projetos Integradores (Backend)
 
-## Autenticação e Login
+## 📝 Descrição do Sistema
 
-O backend possui autenticação por token.
+O **Observatório de Projetos Integradores** é uma plataforma estratégica de governança acadêmica e vitrine tecnológica, concebida para centralizar o ciclo de vida da produção prática em instituições de ensino e estabelecer uma conexão direta com o mercado de trabalho.
 
-### Rota de login
+Este repositório concentra exclusivamente a **camada de Backend (API e Persistência de Dados)**, responsável por fornecer os dados e regras de negócio para o ecossistema unificado, garantindo segurança, integridade e performance.
 
-Endpoint:
+---
 
-`POST /login`
+## ⚙️ Arquitetura e Estrutura do Projeto
 
-A rota recebe o email e a senha do usuário.
+O projeto segue uma arquitetura em camadas (baseada em separação de responsabilidades), estruturada da seguinte forma na pasta `app`:
 
-Exemplo de requisição:
+- **`config/`**: Configurações gerais da aplicação e conexão com o banco de dados.
+- **`routes/`**: Definição dos endpoints da API, agrupados por domínio.
+- **`controllers/`**: Manipulação das requisições e respostas HTTP, servindo de ponte entre as rotas e os serviços.
+- **`services/`**: Contém a lógica de negócio principal do sistema.
+- **`repositories/`**: Camada de persistência, responsável pela comunicação e operações diretas com o banco de dados.
+- **`models/`**: Definição das entidades e tabelas do banco de dados.
+- **`schemas/`**: Esquemas de validação de dados utilizando Pydantic para tipagem de entrada (request) e saída (response).
 
-```json
-{
-  "email": "usuario@email.com",
-  "senha": "123456"
-}
-```
+### Domínios e Rotas da API
 
-Se os dados estiverem corretos, a API retorna um token de acesso:
+A API foi projetada para atender aos diferentes perfis de usuários mapeados no sistema, com endpoints divididos por domínios de negócio:
 
-```json
-{
-  "access_token": "token_gerado",
-  "token_type": "bearer"
-}
-```
+#### Entidades Principais
 
-### Uso do token
+- **Alunos, Professores e Empresas**: Endpoints para gerenciamento de perfis, competências e informações institucionais.
+- **Coordenação**: Gerenciamento e aprovação de usuários.
+- **Projetos e Equipes**: Submissão de Projetos Integradores e acompanhamento.
+- **Avaliações**: Acompanhamento, orientação e avaliação dos trabalhos submetidos pelos alunos.
+- **Estatísticas**: Métricas globais e institucionais, visão geral estratégica sobre o andamento e uso da plataforma.
 
-Para acessar rotas protegidas, o token deve ser enviado no cabeçalho da requisição:
+---
 
-```text
-Authorization: Bearer token_gerado
-```
+## 💻 Tecnologias Utilizadas
 
-No Swagger, o token pode ser informado pelo botão **Authorize**.
+Este projeto foi construído utilizando as seguintes tecnologias:
 
-### Fluxos de erro testados
+- **[Python 3](https://www.python.org/)** - Linguagem de programação.
+- **[FastAPI](https://fastapi.tiangolo.com/)** - Framework web moderno e rápido para construção de APIs.
+- **[Uvicorn](https://www.uvicorn.org/)** - Servidor ASGI para alta performance.
+- **[SQLite](https://www.sqlite.org/)** - Banco de dados relacional leve (banco padrão do projeto: `projeta.db`).
+- **[Pydantic](https://docs.pydantic.dev/)** - Validação de dados e tipagem estática.
 
-* Usuário não encontrado: ocorre quando o email informado não existe no banco.
-* Senha inválida: ocorre quando o email existe, mas a senha está incorreta.
-* Token ausente: ocorre quando uma rota protegida é acessada sem autenticação.
-* Token inválido: ocorre quando o token informado não é válido ou está incorreto.
+---
 
-### Observação sobre segurança
+## 🚀 Como Executar o Projeto Localmente
 
-As senhas não devem ser salvas em texto puro no banco de dados. O sistema deve armazenar apenas a senha criptografada com hash.
+### Pré-requisitos
+
+- **[Python](https://www.python.org/)** (versão 3.8 ou superior recomendada).
+
+### Passos para Instalação e Execução
+
+1. Clone este repositório para a sua máquina local:
+
+   ```bash
+   git clone https://github.com/josevaldr/projeta-observatorio-pi-backend.git
+   ```
+
+2. Acesse a pasta do projeto pelo terminal:
+
+   ```bash
+   cd projeta-observatorio-pi-backend
+   ```
+
+3. Crie um ambiente virtual (opcional, mas recomendado):
+
+   ```bash
+   python -m venv .venv
+   ```
+
+4. Ative o ambiente virtual:
+   - **Windows:**
+     ```bash
+     .venv\Scripts\activate
+     ```
+   - **Linux/macOS:**
+     ```bash
+     source .venv/bin/activate
+     ```
+
+5. Instale as dependências necessárias:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+6. Inicie o servidor de desenvolvimento:
+
+   ```bash
+   fastapi dev app/main.py
+   # Ou utilizando uvicorn diretamente:
+   uvicorn app.main:app --reload
+   ```
+
+7. O servidor será iniciado. Acesse a documentação interativa da API (Swagger) no navegador:
+   - **Swagger UI:** `http://localhost:8000/docs`
+   - **ReDoc:** `http://localhost:8000/redoc`
+
+---
+
+## 🔗 Repositório do Frontend
+
+A Interface do Usuário (UI) e as interações com esta API estão implementadas no Frontend da aplicação. Você pode acessar o repositório oficial no link abaixo:
+
+- **Frontend Repository:** [https://github.com/josevaldr/projeta-observatorio-pi-frontend](https://github.com/josevaldr/projeta-observatorio-pi-frontend)
